@@ -2,6 +2,7 @@ package org.domain.handlers;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+import org.domain.models.Entidad;
 import org.domain.models.ItemRanking;
 import org.domain.models.Ranking;
 import org.jetbrains.annotations.NotNull;
@@ -12,10 +13,15 @@ public class PostReportesHandler implements Handler {
     @Override
     public void handle(@NotNull Context context) throws Exception {
         Ranking reporte = context.bodyAsClass(Ranking.class);
+
         validarReporte(reporte);
+
         System.out.println("Generando ranking...");
+
         List<ItemRanking> ranking = reporte.generarRanking();
+
         context.status(201);
+
         context.json(ranking);
     }
 
@@ -23,5 +29,6 @@ public class PostReportesHandler implements Handler {
         if(reporte.getEntidades().isEmpty()) {
             throw new IllegalArgumentException("Debe haber al menos una entidad para generar el Ranking.");
         }
+        reporte.getEntidades().forEach(Entidad::filtrarIncidentesDeLaSemana);
     }
 }

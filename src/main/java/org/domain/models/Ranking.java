@@ -12,15 +12,10 @@ import java.util.stream.Stream;
 @Getter @Setter
 public class Ranking {
     private List<Entidad> entidades;
-    private List<ItemRanking> ranking;
     private Double coeficiente;
 
-    public Ranking() {
-        this.entidades = new ArrayList<>();
-        this.ranking = new ArrayList<>();
-    }
-
     public List<ItemRanking> generarRanking() {
+        List<ItemRanking> ranking;
         ranking = this.entidades.stream().map(entidad -> entidad.generarItemEnRanking(coeficiente)).collect(Collectors.toList());
         ordenarRanking(ranking);
         return ranking;

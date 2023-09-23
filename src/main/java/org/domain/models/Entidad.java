@@ -26,4 +26,7 @@ public class Entidad {
         return itemRanking;
     }
 
+    public void filtrarIncidentesDeLaSemana() {
+        this.incidentes = this.incidentes.stream().filter(Incidente::emitidoEnLaSemana).collect(Collectors.toList());
+    }
 }
