@@ -16,9 +16,9 @@ public class PostReportesHandler implements Handler {
 
         validarReporte(reporte);
 
-        System.out.println("Generando ranking...");
-
         List<ItemRanking> ranking = reporte.generarRanking();
+
+        ranking.forEach(r -> System.out.println("Entidad: " + r.getEntidad().getNombre() + " - Valor: " + r.getValor()));
 
         context.status(201);
 

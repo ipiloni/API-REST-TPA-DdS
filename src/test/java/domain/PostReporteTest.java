@@ -13,8 +13,8 @@ import org.domain.models.Entidad;
 import org.domain.models.Incidente;
 import org.domain.models.Ranking;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PostReporteTest {
@@ -22,7 +22,7 @@ public class PostReporteTest {
         try {
             HttpClient httpClient = HttpClients.createDefault();
 
-            String url = "http://localhost:8080/api/reporte";
+            String url = "http://localhost:4567/api/reporte";
 
             HttpPost httpPost = new HttpPost(url);
 
@@ -55,13 +55,13 @@ public class PostReporteTest {
         Entidad entidad2 = new Entidad();
         Entidad entidad3 = new Entidad();
 
-        Incidente incidente1 = new Incidente(LocalDateTime.now().minusDays(2), LocalDateTime.now().minusDays(1), false);
-        Incidente incidente2 = new Incidente(LocalDateTime.now().minusDays(3), null, true);
-        Incidente incidente3 = new Incidente(LocalDateTime.now().minusHours(4), null, true);
-        Incidente incidente4 = new Incidente(LocalDateTime.now().minusMinutes(45), null, true);
-        Incidente incidente5 = new Incidente(LocalDateTime.now().minusDays(7), null, true);
-        Incidente incidente6 = new Incidente(LocalDateTime.now().minusDays(8), LocalDateTime.now().minusDays(6), false);
-        Incidente incidente7 = new Incidente(LocalDateTime.now().minusMinutes(120), LocalDateTime.now().minusMinutes(60), false);
+        Incidente incidente1 = new Incidente(new Date(System.currentTimeMillis() - 2 * 24 * 60 * 60 * 1000), new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000), false);
+        Incidente incidente2 = new Incidente(new Date(System.currentTimeMillis() - 3 * 24 * 60 * 60 * 1000), null, true);
+        Incidente incidente3 = new Incidente(new Date(System.currentTimeMillis() - 4 * 60 * 60 * 1000), null, true);
+        Incidente incidente4 = new Incidente(new Date(System.currentTimeMillis() - 45 * 60 * 1000), null, true); // hace 45 min y sigue abierto
+        Incidente incidente5 = new Incidente(new Date(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000), null, true);
+        Incidente incidente6 = new Incidente(new Date(System.currentTimeMillis() - 6 * 24 * 60 * 60 * 1000), new Date(System.currentTimeMillis() - 5 * 12 * 60 * 60 * 1000), false); // hace 6 dias y se cerro hace 5 dias y 12 horas
+        Incidente incidente7 = new Incidente(new Date(System.currentTimeMillis() - 120 * 60 * 1000), new Date(System.currentTimeMillis() - 60 * 60 * 1000), false);
 
         entidad1.setId(1);
         entidad2.setId(2);
@@ -76,10 +76,10 @@ public class PostReporteTest {
         List<Incidente> incidentesGoogle = new ArrayList<>();
 
         incidentesApple.add(incidente1);
-        incidentesApple.add(incidente2);
+        incidentesApple.add(incidente7);
 
         incidentesMicrosoft.add(incidente3);
-        incidentesMicrosoft.add(incidente7);
+        incidentesMicrosoft.add(incidente2);
         incidentesMicrosoft.add(incidente5);
 
         incidentesGoogle.add(incidente4);
