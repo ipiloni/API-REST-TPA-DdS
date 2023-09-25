@@ -17,15 +17,21 @@ public class Incidente {
     private Date fechaFin;
     private Boolean activo;
 
-    public Incidente() {}
-
     public Incidente(Date fI, Date fF, Boolean a) {
         this.fechaInicio = fI;
         this.fechaFin = fF;
         this.activo = a;
     }
 
-    public double generarTiempoDeResolucion() {
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    public double getTiempoDeResolucion() {
         long tiempoInicio = fechaInicio.getTime();
         long tiempoFin = fechaFin.getTime();
 

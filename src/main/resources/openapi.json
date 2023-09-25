@@ -1,0 +1,82 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Ranking API",
+    "description": "Este servicio permite calcular el ranking semanal previsto en la entrega anterior con el criterio de mayor grado de impacto de las problemáticas considerando que las que algunas comunidades tienen mayor cantidad de miembros y por lo tanto les afecta de mayor medida el no funcionamiento de ese servicio.",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "ranking",
+      "description": "Everything about your Rankings"
+    }
+  ],
+  "paths": {
+    "/semanal": {
+      "get": {
+        "tags": [
+          "ranking"
+        ],
+        "summary": "get weekly ranking",
+        "description": "Get an existing ranking",
+        "operationId": "getRanking",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RankingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RankingResponse": {
+        "type": "object",
+        "properties": {
+          "semana": {
+            "type": "string",
+            "format": "date",
+            "example": "2023-09-11"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemResponse"
+            }
+          }
+        }
+      },
+      "ItemResponse": {
+        "type": "object",
+        "properties": {
+          "posicion": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "example": "EntidadEjemplo"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 22
+          },
+          "valor": {
+            "type": "number",
+            "format": "double",
+            "example": 50.4
+          }
+        }
+      }
+    }
+  }
+}
