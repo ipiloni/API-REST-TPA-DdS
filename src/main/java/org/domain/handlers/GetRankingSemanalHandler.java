@@ -5,42 +5,36 @@ import io.javalin.http.Handler;
 import io.javalin.openapi.*;
 import lombok.Setter;
 import org.domain.mappers.RankingMapper;
-import org.domain.models.Entidad;
-import org.domain.models.ItemRanking;
 import org.domain.models.Ranking;
 import org.domain.models.dbo.RankingResponse;
 import org.domain.persistence.Rankingdb;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDate;
-import java.util.List;
-
-public class GetRankingHandler implements Handler{
+public class GetRankingSemanalHandler implements Handler {
     @Setter
     private RankingMapper rankingMapper = new RankingMapper();
-    private Rankingdb rankingdb = new Rankingdb();
+    @Setter
+    private final Rankingdb rankingdb = new Rankingdb();
 
     @Override
     @OpenApi(
-            summary = "Get ranking",
-            operationId = "getRanking",
-            path = "/ranking",
+            summary = "Get weekly ranking",
+            operationId = "getRankingSemanal",
+            path = "/ranking/semanal",
             methods = HttpMethod.GET,
             tags = {"Ranking"},
             responses = {
-                    @OpenApiResponse(status = "200", content = {@OpenApiContent(from = RankingResponse.class)})
+                    @OpenApiResponse(status = "200", content = {@OpenApiContent(from = RankingResponse.class)}),
+                    @OpenApiResponse(status = "404", description = "Ranking not found")
             }
     )
-
     public void handle(@NotNull Context context) throws Exception {
-       //no recibe body -> no valida datos del body
+        Ranking ranking = rankingdb.getSemanal();
 
-        Ranking ranking = rankingdb.get();
-
-        if(ranking != null){
-            context.status(200).json(rankingMapper.generateResponse(ranking));
-        }else{
+        if(ranking == null){
             context.status(404);
+        }else{
+            context.status(200).json(rankingMapper.generateResponse(ranking));
         }
     }
 }

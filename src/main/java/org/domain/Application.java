@@ -2,7 +2,8 @@ package org.domain;
 
 import io.javalin.Javalin;
 import org.domain.config.Config;
-import org.domain.handlers.GetRankingHandler;
+import org.domain.handlers.GetRankingByIdHandler;
+import org.domain.handlers.GetRankingSemanalHandler;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -23,14 +24,20 @@ public class Application {
                 .create(Config.getConfigs())
                 .routes(() -> {
                     path("ranking", () -> {
-                        get(new GetRankingHandler()::handle);
+                        path("{id}", () -> {
+                            get(new GetRankingByIdHandler()::handle);
+                        });
+                        path("semanal", () -> {
+                            get(new GetRankingSemanalHandler()::handle);
+
+                        });
                     });
                 })
                 .start(4567);
         System.out.println("Check out Swagger UI docs at http://localhost:4567/swagger");
 
         app.exception(IllegalArgumentException.class, (e, ctx) -> {
-            //tratar excepcion
+            //TODO tratar excepcion
         });
     }
 }
