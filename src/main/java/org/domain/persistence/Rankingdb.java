@@ -3,25 +3,22 @@ package org.domain.persistence;
 import org.domain.models.Entidad;
 import org.domain.models.ItemRanking;
 import org.domain.models.Ranking;
+import org.domain.repositories.RepositorioDeRankings;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class Rankingdb {
 
     public Ranking get(Integer id){
-        //TODO lo dejo hardcodeado
-        Entidad entidad = new Entidad(3,"EntidadEjemplo", List.of());
-        ItemRanking item = new ItemRanking(1, entidad, 50.4);
-        Ranking ranking = new Ranking(1, LocalDate.of(2023, 9, 11),List.of(item));
-        return ranking;
+        return RepositorioDeRankings.obtenerPorId(id);
     }
 
-    public Ranking getSemanal(){
-        //TODO lo dejo hardcodeado
-        Entidad entidad = new Entidad(3,"EntidadEjemplo", List.of());
-        ItemRanking item = new ItemRanking(1, entidad, 50.4);
-        Ranking ranking = new Ranking(1, LocalDate.of(2023, 9, 11),List.of(item));
-        return ranking;
+    public Ranking getSemanal() {
+        Optional<Ranking> ranking = RepositorioDeRankings.obtenerDeSemana(Ranking.obtenerSemana());
+
+        return ranking.orElse(null);
     }
+
 }

@@ -14,7 +14,7 @@ public class GetRankingSemanalHandler implements Handler {
     @Setter
     private RankingMapper rankingMapper = new RankingMapper();
     @Setter
-    private final Rankingdb rankingdb = new Rankingdb();
+    private Rankingdb rankingdb = new Rankingdb();
 
     @Override
     @OpenApi(
@@ -28,7 +28,7 @@ public class GetRankingSemanalHandler implements Handler {
                     @OpenApiResponse(status = "404", description = "Ranking not found")
             }
     )
-    public void handle(@NotNull Context context) throws Exception {
+    public void handle(@NotNull Context context) {
         Ranking ranking = rankingdb.getSemanal();
 
         if(ranking == null){

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="tp-anual-dds-2023" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <properties>
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp-anual-dds-2023"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value="root"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!--
+            Valores que puede tener la fila 12:
+                validate: validate the schema, makes no changes to the database.
+                create-only: database creation will be generated.
+                drop: database dropping will be generated.
+                update: update the schema.
+                create: creates the schema, destroying previous data.
+                create-drop: drop the schema when the SessionFactory is closed explicitly, typically when the application is stopped.
+                none: does nothing with the schema, makes no changes to the database
+            -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

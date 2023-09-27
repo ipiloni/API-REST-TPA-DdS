@@ -21,9 +21,8 @@ public class RankingMapper {
         List<ItemResponse> itemResponses = new ArrayList<>();
 
         items.forEach(itemRanking -> itemResponses.add(new ItemResponse(
-                itemRanking.getPosicion(),
-                itemRanking.getEntidad().getNombre(),
-                itemRanking.getEntidad().getId(),
+                itemRanking.getPosicionEnRanking(),
+                itemRanking.getIdEntidad(),
                 itemRanking.getValor()
         )));
 
