@@ -22,7 +22,7 @@ public class PostReporteTest {
         try {
             HttpClient httpClient = HttpClients.createDefault();
 
-            String url = "http://localhost:4567/api/reporte";
+            String url = "http://localhost:8080/api/reporte";
 
             HttpPost httpPost = new HttpPost(url);
 

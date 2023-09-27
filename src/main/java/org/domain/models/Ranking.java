@@ -21,5 +21,6 @@ public class Ranking {
 
     public void ordenarRanking(List<ItemRanking> items) {
         Collections.sort(items);
+
     }
 }

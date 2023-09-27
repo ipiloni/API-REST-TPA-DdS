@@ -10,6 +10,6 @@ public class ItemRanking implements Comparable<ItemRanking> {
 
     @Override
     public int compareTo(ItemRanking otroItem) {
-        return Double.compare(this.valor, otroItem.valor);
+        return otroItem.valor.compareTo(this.valor);
     }
 }
