@@ -6,11 +6,13 @@ import org.domain.handlers.GetRankingByIdHandler;
 import org.domain.handlers.GetRankingSemanalHandler;
 import org.domain.models.Entidad;
 import org.domain.models.Incidente;
+import org.domain.models.Ranking;
 import org.domain.models.ItemRanking;
 import org.domain.persistence.BDUtils;
 
 import javax.persistence.EntityManager;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -50,11 +52,13 @@ public class Application {
 
         EntityManager em = BDUtils.getEntityManager();
         BDUtils.comenzarTransaccion(em);
-        /*Incidente incidente = new Incidente(null, null, true);
+        Incidente incidente = new Incidente(null, null, true);
         em.persist(incidente);
-        Entidad entidad = new Entidad(1, "EntidadEjemplo", List.of(incidente));
-        em.persist(entidad);*/
-        em.persist(new ItemRanking(1, 1, 10.1));
+        Entidad entidad = new Entidad(1, "EntidadEjemplo");
+        em.persist(entidad);
+        ItemRanking itemRanking = new ItemRanking(1, entidad, 10.1);
+        em.persist(new Ranking(LocalDate.of(2023,10,8), List.of(itemRanking)));
+        em.persist(itemRanking);
 
         BDUtils.commit(em);
     }

@@ -10,6 +10,8 @@ import org.domain.models.dbo.RankingResponse;
 import org.domain.persistence.Rankingdb;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+
 public class GetRankingSemanalHandler implements Handler {
     @Setter
     private RankingMapper rankingMapper = new RankingMapper();

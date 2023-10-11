@@ -3,19 +3,26 @@ package org.domain.models;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
 @Getter @Setter
+@Entity
+@Table(name = "ranking")
 public class Ranking {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column
     private LocalDate semana;
+    @OneToMany(mappedBy = "ranking")
     private List<ItemRanking> items;
+    @Column
     private Double coeficiente = 0.5;
 
-    public Ranking(Integer id, LocalDate semana, List<ItemRanking> items) {
-        this.id = id;
+    public Ranking(LocalDate semana, List<ItemRanking> items) {
         this.semana = semana;
         this.items = items;
     }

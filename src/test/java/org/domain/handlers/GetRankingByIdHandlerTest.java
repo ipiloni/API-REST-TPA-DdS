@@ -56,9 +56,9 @@ public class GetRankingByIdHandlerTest {
 
     @Test
     public void verifyValidRanking() throws Exception{
-        Mockito.doReturn(new Ranking(1, LocalDate.of(2023,9,11),List.of())).when(rankingdb).get(any());
+        Mockito.doReturn(new Ranking(LocalDate.of(2023,9,11),List.of())).when(rankingdb).get(any());
 
-        RankingResponse rankingResponse = new RankingResponse("2023-09-11", List.of());
+        RankingResponse rankingResponse = new RankingResponse("2023-09-11"/*, List.of()*/);
 
         Mockito.doReturn(rankingResponse).when(rankingMapper).generateResponse(any());
         Mockito.when(context.pathParam(any())).thenReturn("1");

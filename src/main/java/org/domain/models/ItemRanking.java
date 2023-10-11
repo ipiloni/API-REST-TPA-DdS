@@ -11,16 +11,16 @@ import javax.persistence.*;
 public class ItemRanking implements Comparable<ItemRanking> {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-   // @ManyToOne @JoinColumn(name = "id_ranking")
-   // private Ranking ranking;
+    @ManyToOne @JoinColumn(name = "id_ranking")
+    private Ranking ranking;
     @Column
     private Integer posicion;
-    //@ManyToOne @JoinColumn(name = "id_entidad")
-    private Integer id_entidad;
+    @ManyToOne @JoinColumn(name = "id_entidad")
+    private Entidad id_entidad;
     @Column
     private Double valor;
 
-    public ItemRanking(Integer posicion, Integer id_entidad, Double valor) {
+    public ItemRanking(Integer posicion, Entidad id_entidad, Double valor) {
         this.posicion = posicion;
         this.id_entidad = id_entidad;
         this.valor = valor;
@@ -30,7 +30,7 @@ public class ItemRanking implements Comparable<ItemRanking> {
         return posicion;
     }
 
-    public Integer getId_entidad() {
+    public Entidad getId_entidad() {
         return id_entidad;
     }
 

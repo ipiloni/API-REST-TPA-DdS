@@ -12,8 +12,9 @@ public class RankingMapper {
 
     public RankingResponse generateResponse(Ranking ranking){
         return new RankingResponse(
-                ranking.getSemana().toString(),
-                generateItemsResponse(ranking.getItems())
+                ranking.getSemana().toString()
+                //generateItemsResponse(ranking.getItems()
+                // )
         );
     }
 
@@ -22,7 +23,7 @@ public class RankingMapper {
 
         items.forEach(itemRanking -> itemResponses.add(new ItemResponse(
                 itemRanking.getPosicion(),
-                itemRanking.getId_entidad(),
+                itemRanking.getId_entidad().getId(),
                 itemRanking.getValor()
         )));
 
