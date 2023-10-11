@@ -24,12 +24,11 @@ public class Application {
                 .create(Config.getConfigs())
                 .routes(() -> {
                     path("ranking", () -> {
-                        path("{id}", () -> {
-                            get(new GetRankingByIdHandler()::handle);
-                        });
                         path("semanal", () -> {
                             get(new GetRankingSemanalHandler()::handle);
-
+                        });
+                        path("{id}", () -> {
+                            get(new GetRankingByIdHandler()::handle);
                         });
                     });
                 })
