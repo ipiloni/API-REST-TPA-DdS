@@ -3,6 +3,7 @@ package org.domain.models;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
@@ -12,9 +13,19 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Getter @Setter
+@Entity
+@Table(name = "Incidente")
 public class Incidente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column
     private Date fechaInicio;
+    @ManyToOne @JoinColumn(name = "id_entidad")
+    private Entidad entidad;
+    @Column
     private Date fechaFin;
+    @Column
     private Boolean activo;
 
     public Incidente(Date fI, Date fF, Boolean a) {

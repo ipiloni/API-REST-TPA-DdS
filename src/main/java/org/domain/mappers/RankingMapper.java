@@ -22,8 +22,7 @@ public class RankingMapper {
 
         items.forEach(itemRanking -> itemResponses.add(new ItemResponse(
                 itemRanking.getPosicion(),
-                itemRanking.getEntidad().getNombre(),
-                itemRanking.getEntidad().getId(),
+                itemRanking.getId_entidad(),
                 itemRanking.getValor()
         )));
 

@@ -2,13 +2,13 @@ package org.domain.models.dbo;
 
 public class ItemResponse {
     private Integer posicion;
-    private String nombre_entidad;
+   // private String nombre_entidad;
     private Integer id_entidad;
     private Double valor;
 
-    public ItemResponse(Integer posicion, String nombre_entidad, Integer id_entidad, Double valor) {
+    public ItemResponse(Integer posicion, Integer id_entidad, Double valor) {
         this.posicion = posicion;
-        this.nombre_entidad = nombre_entidad;
+      //  this.nombre_entidad = nombre_entidad;
         this.id_entidad = id_entidad;
         this.valor = valor;
     }
@@ -21,13 +21,13 @@ public class ItemResponse {
         this.posicion = posicion;
     }
 
-    public String getNombre_entidad() {
+    /*public String getNombre_entidad() {
         return nombre_entidad;
     }
 
     public void setNombre_entidad(String nombre_entidad) {
         this.nombre_entidad = nombre_entidad;
-    }
+    }*/
 
     public Integer getId_entidad() {
         return id_entidad;

@@ -1,18 +1,28 @@
 package org.domain.models;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+
 @Setter @Getter
+@Entity
+@Table(name = "ItemRanking")
 public class ItemRanking implements Comparable<ItemRanking> {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+   // @ManyToOne @JoinColumn(name = "id_ranking")
+   // private Ranking ranking;
+    @Column
     private Integer posicion;
-    private Entidad entidad;
+    //@ManyToOne @JoinColumn(name = "id_entidad")
+    private Integer id_entidad;
+    @Column
     private Double valor;
 
-    public ItemRanking(Integer posicion, Entidad entidad, Double valor) {
+    public ItemRanking(Integer posicion, Integer id_entidad, Double valor) {
         this.posicion = posicion;
-        this.entidad = entidad;
+        this.id_entidad = id_entidad;
         this.valor = valor;
     }
 
@@ -20,8 +30,8 @@ public class ItemRanking implements Comparable<ItemRanking> {
         return posicion;
     }
 
-    public Entidad getEntidad() {
-        return entidad;
+    public Integer getId_entidad() {
+        return id_entidad;
     }
 
     public Double getValor() {

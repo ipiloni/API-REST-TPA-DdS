@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
@@ -6,6 +7,12 @@
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
+  </component>
+  <component name="ProjectResources">
+    <resource url="http://java.sun.com/xml/ns/persistence" location="$PROJECT_DIR$" />
+    <resource url="http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" location="$PROJECT_DIR$" />
+    <resource url="http://xmlns.jcp.org/xml/ns/persistence" location="$PROJECT_DIR$" />
+    <resource url="http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd" location="$PROJECT_DIR$" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="corretto-11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
