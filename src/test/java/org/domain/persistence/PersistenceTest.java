@@ -2,10 +2,15 @@ package org.domain.persistence;
 
 import org.domain.models.EntidadPropietaria;
 import org.domain.models.Incidente;
+import org.domain.models.Ranking;
+import org.domain.models.repositories.RepositorioDeEntidades;
+import org.domain.models.repositories.RepositorioDeIncidentes;
+import org.junit.Assert;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PersistenceTest {
     // TODO: VERIFICAR QUE ESTE EN UPDATE LA CONEXION CON BASE DE DATOS!
@@ -60,8 +65,23 @@ public class PersistenceTest {
     }
 
     @Test
+    public void obtenerEntidadesPrestadorasCorrectamente() {
+        List<EntidadPropietaria> entidades = RepositorioDeEntidades.obtenerTodasLasEntidades();
+        entidades.forEach(e -> System.out.println("Entidad: " + e.getRazonSocial()));
+    }
+
+    @Test
+    public void obtenerIncidentesCorrectamente() {
+        List<Incidente> incidentes = RepositorioDeIncidentes.obtenerIncidentesDeOrganizacion(1);
+        Assert.assertEquals(4, incidentes.size());
+    }
+
+    @Test
     public void persistirRankingEnBaseDeDatosCorrectamente() {
-        // TODO
+        Ranking ranking = new Ranking();
+        ranking.setCoeficiente(0.8);
+        ranking.setSemana(Ranking.obtenerSemana());
+        ranking.generarRanking();
     }
 
 }

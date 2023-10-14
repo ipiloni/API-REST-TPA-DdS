@@ -17,7 +17,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor
 @Entity
 @Table(name = "ranking")
 public class Ranking {
@@ -34,6 +33,8 @@ public class Ranking {
         this.idRanking = id;
         this.semana = semana;
     }
+
+    public Ranking() { }
 
     public Integer getIdRanking() { return idRanking; }
 
