@@ -6,50 +6,63 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
 import java.util.Calendar;
 import java.util.Date;
 
-@Getter @Setter
 @Entity
-@Table(name = "Incidente")
+@Table(name = "incidente")
 public class Incidente {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idIncidente")
     private Integer id;
-    @Column
-    private Date fechaInicio;
-    @ManyToOne @JoinColumn(name = "id_entidad")
-    private Entidad entidad;
-    @Column
-    private Date fechaFin;
-    @Column
+    @Column(name = "fechaInicio")
+    private LocalDateTime fechaInicio;
+    @Column(name = "idOrganizacion")
+    private Integer idOrganizacion;
+    @Column(name = "fechaFin")
+    private LocalDateTime fechaFin;
+    @Column(name = "activo")
     private Boolean activo;
 
-    public Incidente(Date fI, Date fF, Boolean a) {
-        this.fechaInicio = fI;
-        this.fechaFin = fF;
-        this.activo = a;
-    }
-
-    public Boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Boolean activo) {
+    public Incidente(Integer id, LocalDateTime fechaInicio, Integer idOrganizacion, LocalDateTime fechaFin, Boolean activo) {
+        this.id = id;
+        this.fechaInicio = fechaInicio;
+        this.idOrganizacion = idOrganizacion;
+        this.fechaFin = fechaFin;
         this.activo = activo;
     }
 
-    public double getTiempoDeResolucion() {
+    public Incidente() { }
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
+
+    public LocalDateTime getFechaInicio() { return fechaInicio; }
+
+    public void setFechaInicio(LocalDateTime fechaInicio) { this.fechaInicio = fechaInicio; }
+
+    public Integer getIdOrganizacion() { return idOrganizacion; }
+
+    public void setIdOrganizacion(Integer idOrganizacion) { this.idOrganizacion = idOrganizacion; }
+
+    public LocalDateTime getFechaFin() { return fechaFin; }
+
+    public void setFechaFin(LocalDateTime fechaFin) { this.fechaFin = fechaFin; }
+
+    public Boolean getActivo() { return activo; }
+
+    public void setActivo(Boolean activo) { this.activo = activo; }
+
+    /*public double getTiempoDeResolucion() {
         long tiempoInicio = fechaInicio.getTime();
         long tiempoFin = fechaFin.getTime();
 
         return (double) (tiempoFin - tiempoInicio) / 1000;
-    }
+    }*/
 
-    public boolean emitidoEnLaSemana() {
+    /*public boolean emitidoEnLaSemana() {
         Calendar calendarDomingo = Calendar.getInstance();
         Calendar calendarLunes = Calendar.getInstance();
         calendarDomingo.setTime(new Date());
@@ -70,5 +83,16 @@ public class Incidente {
         Date primerDiaSemana = calendarLunes.getTime();
 
         return (this.fechaInicio.after(primerDiaSemana) && this.fechaInicio.before(ultimoDiaSemana));
+    }*/
+
+    public boolean emitidoEnLaSemana() {
+        LocalDateTime primerDiaSemana = LocalDateTime.now().with(DayOfWeek.MONDAY).withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime ultimoDiaSemana = LocalDateTime.now().with(DayOfWeek.SUNDAY).withHour(23).withMinute(59).withSecond(59);
+
+        return (this.fechaInicio.isAfter(primerDiaSemana) && this.fechaInicio.isBefore(ultimoDiaSemana.plusSeconds(1)));
+    }
+
+    public double getIntervaloDeResolucionEnMinutos() {
+        return Duration.between(fechaInicio, fechaFin).toMinutes();
     }
 }

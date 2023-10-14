@@ -4,7 +4,7 @@ import io.javalin.Javalin;
 import org.domain.config.Config;
 import org.domain.handlers.GetRankingByIdHandler;
 import org.domain.handlers.GetRankingSemanalHandler;
-import org.domain.models.Entidad;
+import org.domain.models.EntidadPropietaria;
 import org.domain.models.Incidente;
 import org.domain.models.Ranking;
 import org.domain.models.ItemRanking;
@@ -13,7 +13,6 @@ import org.domain.persistence.BDUtils;
 import javax.persistence.EntityManager;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -50,16 +49,16 @@ public class Application {
             //TODO tratar excepcion
         });
 
-        EntityManager em = BDUtils.getEntityManager();
+        /*EntityManager em = BDUtils.getEntityManager();
         BDUtils.comenzarTransaccion(em);
         Incidente incidente = new Incidente(null, null, true);
         em.persist(incidente);
-        Entidad entidad = new Entidad(1, "EntidadEjemplo");
-        em.persist(entidad);
-        ItemRanking itemRanking = new ItemRanking(1, entidad, 10.1);
+        EntidadPropietaria entidadPropietaria = new EntidadPropietaria(1, "EntidadEjemplo");
+        em.persist(entidadPropietaria);
+        ItemRanking itemRanking = new ItemRanking(1, entidadPropietaria, 10.1);
         em.persist(new Ranking(LocalDate.of(2023,10,8), List.of(itemRanking)));
         em.persist(itemRanking);
 
-        BDUtils.commit(em);
+        BDUtils.commit(em);*/
     }
 }

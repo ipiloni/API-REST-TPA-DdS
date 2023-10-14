@@ -35,13 +35,13 @@ public class GetRankingByIdHandler implements Handler{
         if(id == null){
             context.status(404);
         }else{
-            Ranking ranking = rankingdb.get(id);
+            /*Ranking ranking = rankingdb.get(id);
 
             if(ranking == null){
                 context.status(404);
             }else{
                 context.status(200).json(rankingMapper.generateResponse(ranking));
-            }
+            }*/
         }
     }
 }

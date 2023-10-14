@@ -1,6 +1,6 @@
 package org.domain.persistence;
 
-import org.domain.models.Entidad;
+import org.domain.models.EntidadPropietaria;
 import org.domain.models.ItemRanking;
 import org.domain.models.Ranking;
 
@@ -10,13 +10,13 @@ import java.util.Optional;
 
 public class Rankingdb {
 
-    public Ranking get(Integer id){
+    /*public Ranking get(Integer id){
         //TODO lo dejo hardcodeado
-        Entidad entidad = new Entidad(3,"EntidadEjemplo");
-        ItemRanking item = new ItemRanking(1, entidad, 50.4);
+        EntidadPropietaria entidadPropietaria = new EntidadPropietaria(3,"EntidadEjemplo");
+        ItemRanking item = new ItemRanking(1, entidadPropietaria, 50.4);
         Ranking ranking = new Ranking(LocalDate.of(2023, 9, 11),List.of(item));
         return ranking;
-    }
+    }*/
 
     public Ranking getSemanal(){
         //TODO lo dejo hardcodeado

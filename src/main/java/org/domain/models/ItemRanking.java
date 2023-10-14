@@ -1,42 +1,55 @@
 package org.domain.models;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
-@Setter @Getter
 @Entity
 @Table(name = "ItemRanking")
 public class ItemRanking implements Comparable<ItemRanking> {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    @ManyToOne @JoinColumn(name = "id_ranking")
+    @ManyToOne
+    @JoinColumn(name = "ranking_idRanking")
     private Ranking ranking;
-    @Column
-    private Integer posicion;
-    @ManyToOne @JoinColumn(name = "id_entidad")
-    private Entidad id_entidad;
-    @Column
+    @Column(name = "posicionEnRanking")
+    private Integer posicionEnRanking;
+    @Column(name = "entidad_idOrganizacion")
+    private Integer idOrganizacion;
+    @Column(name = "valor")
     private Double valor;
 
-    public ItemRanking(Integer posicion, Entidad id_entidad, Double valor) {
-        this.posicion = posicion;
-        this.id_entidad = id_entidad;
+    public ItemRanking(Ranking ranking, Integer idOrganizacion, Double valor) {
+        this.ranking = ranking;
+        this.idOrganizacion = idOrganizacion;
         this.valor = valor;
     }
 
-    public Integer getPosicion() {
-        return posicion;
+    public ItemRanking(Integer posicion, Integer idOrganizacion, Double valor) {
+        this.posicionEnRanking = posicion;
+        this.idOrganizacion = idOrganizacion;
+        this.valor = valor;
     }
 
-    public Entidad getId_entidad() {
-        return id_entidad;
-    }
+    public Integer getId() { return id; }
 
-    public Double getValor() {
-        return valor;
-    }
+    public void setId(Integer id) { this.id = id; }
+
+    public Ranking getRanking() { return ranking; }
+
+    public void setRanking(Ranking ranking) { this.ranking = ranking; }
+
+    public Integer getPosicion() { return posicionEnRanking; }
+
+    public void setPosicion(Integer posicion) { this.posicionEnRanking = posicion; }
+
+    public Integer getOrganizacion() { return idOrganizacion; }
+
+    public void setOrganizacion(Integer idOrganizacion) { this.idOrganizacion = idOrganizacion; }
+
+    public Double getValor() { return valor; }
+
+    public void setValor(Double valor) { this.valor = valor; }
 
     @Override
     public int compareTo(ItemRanking otroItem) {
