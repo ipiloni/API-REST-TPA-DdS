@@ -19,10 +19,10 @@ public class PersistenceTest {
 
     @Test
     public void generarInformacionEnBaseDeDatos() {
-        //EntidadPropietaria entidad1 = new EntidadPropietaria(1, "Don Satur");
-        //EntidadPropietaria entidad2 = new EntidadPropietaria(2, "Boreal");
-        //EntidadPropietaria entidad3 = new EntidadPropietaria(3, "Nivea");
-        //EntidadPropietaria entidad4 = new EntidadPropietaria(4, "Adidas");
+        EntidadPropietaria entidad1 = new EntidadPropietaria(1, "Don Satur");
+        EntidadPropietaria entidad2 = new EntidadPropietaria(2, "Boreal");
+        EntidadPropietaria entidad3 = new EntidadPropietaria(3, "Nivea");
+        EntidadPropietaria entidad4 = new EntidadPropietaria(4, "Adidas");
         Incidente incidente1 = new Incidente(1, LocalDateTime.now().minusDays(5), 1, LocalDateTime.now().minusDays(2), false);
         Incidente incidente2 = new Incidente(2, LocalDateTime.now().minusDays(5).plusHours(25), 1, LocalDateTime.now().minusDays(2).plusHours(2), false);
         Incidente incidente3 = new Incidente(3, LocalDateTime.now().minusDays(4).plusHours(12), 1, LocalDateTime.now().minusDays(2).plusHours(5), false);
@@ -37,12 +37,12 @@ public class PersistenceTest {
         Incidente incidente12 = new Incidente(12, LocalDateTime.now().minusDays(5).plusHours(12), 4, LocalDateTime.now().minusDays(2), false);
 
         EntityManager em = BDUtils.getEntityManager();
-        //BDUtils.comenzarTransaccion(em);
-        //em.persist(entidad1);
-        //em.persist(entidad2);
-        //em.persist(entidad3);
-        //em.persist(entidad4);
-        //BDUtils.commit(em);
+        BDUtils.comenzarTransaccion(em);
+        em.persist(entidad1);
+        em.persist(entidad2);
+        em.persist(entidad3);
+        em.persist(entidad4);
+        BDUtils.commit(em);
         BDUtils.comenzarTransaccion(em);
         em.merge(incidente1);
         em.merge(incidente2);
@@ -61,7 +61,7 @@ public class PersistenceTest {
 
     @Test
     public void persistirRankingEnBaseDeDatosCorrectamente() {
-
+        // TODO
     }
 
 }
