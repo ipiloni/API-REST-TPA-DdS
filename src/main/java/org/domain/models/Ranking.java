@@ -11,10 +11,7 @@ import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -59,10 +56,10 @@ public class Ranking {
 
         items.sort(Comparator.comparingDouble(ItemRanking::getValor));
 
-        int posicion = 1;
+        int posicion = items.size();
         for (ItemRanking item : items) {
             item.setPosicion(posicion);
-            posicion++;
+            posicion--;
         }
 
         RepositorioDeRankings.persistirRanking(this);
@@ -72,7 +69,7 @@ public class Ranking {
     public ItemRanking generarItem(Ranking ranking, Integer idEntidad, List<Incidente> incidentesDeLaSemana) {
         double valor = 0.0;
 
-        List<Incidente> incidentesCerrados = incidentesDeLaSemana.stream().filter(i -> !i.getActivo()).collect(Collectors.toList());
+        List<Incidente> incidentesCerrados = incidentesDeLaSemana.stream().filter(i -> !i.getActivo() && Objects.equals(i.getIdOrganizacion(), idEntidad)).collect(Collectors.toList());
         valor += incidentesCerrados.stream().mapToDouble(Incidente::getIntervaloDeResolucionEnMinutos).sum();
 
         valor += incidentesDeLaSemana.stream().filter(Incidente::getActivo).count() * coeficiente;
