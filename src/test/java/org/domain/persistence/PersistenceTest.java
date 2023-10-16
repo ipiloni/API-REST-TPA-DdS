@@ -2,9 +2,11 @@ package org.domain.persistence;
 
 import org.domain.models.EntidadPropietaria;
 import org.domain.models.Incidente;
+import org.domain.models.ItemRanking;
 import org.domain.models.Ranking;
-import org.domain.models.repositories.RepositorioDeEntidades;
-import org.domain.models.repositories.RepositorioDeIncidentes;
+import org.domain.persistence.repositories.RepositorioDeEntidades;
+import org.domain.persistence.repositories.RepositorioDeIncidentes;
+import org.domain.persistence.repositories.RepositorioDeRankings;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,15 +26,15 @@ public class PersistenceTest {
 
     @Test
     public void generarInformacionEnBaseDeDatos() {
-        EntidadPropietaria entidad1 = new EntidadPropietaria(1, "Don Satur");
-        EntidadPropietaria entidad2 = new EntidadPropietaria(2, "Boreal");
-        EntidadPropietaria entidad3 = new EntidadPropietaria(3, "Nivea");
-        EntidadPropietaria entidad4 = new EntidadPropietaria(4, "Adidas");
-        Incidente incidente1 = new Incidente(1, LocalDateTime.now().minusDays(5), 1, LocalDateTime.now().minusDays(2), false);
-        Incidente incidente2 = new Incidente(2, LocalDateTime.now().minusDays(5).plusHours(25), 1, LocalDateTime.now().minusDays(2).plusHours(2), false);
-        Incidente incidente3 = new Incidente(3, LocalDateTime.now().minusDays(4).plusHours(12), 1, LocalDateTime.now().minusDays(2).plusHours(5), false);
-        Incidente incidente4 = new Incidente(4, LocalDateTime.now().minusDays(2).plusHours(12), 1, LocalDateTime.now().minusDays(1).plusHours(12), false);
-        Incidente incidente5 = new Incidente(5, LocalDateTime.now().minusDays(5).plusHours(5), 2, LocalDateTime.now().minusDays(2).minusHours(12), false);
+       //EntidadPropietaria entidad1 = new EntidadPropietaria(1, "Don Satur");
+       // EntidadPropietaria entidad2 = new EntidadPropietaria(2, "Boreal");
+       // EntidadPropietaria entidad3 = new EntidadPropietaria(3, "Nivea");
+       // EntidadPropietaria entidad4 = new EntidadPropietaria(4, "Adidas");
+        Incidente incidente1 = new Incidente(13, LocalDateTime.now().minusDays(0), 1, LocalDateTime.now().plusDays(2), false);
+        Incidente incidente2 = new Incidente(14, LocalDateTime.now().minusDays(0).plusHours(25), 1, LocalDateTime.now().plusDays(2).plusHours(2), false);
+        Incidente incidente3 = new Incidente(15, LocalDateTime.now().minusDays(0).plusHours(12), 1, LocalDateTime.now().plusDays(2).plusHours(5), false);
+        Incidente incidente4 = new Incidente(16, LocalDateTime.now().minusDays(0).plusHours(12), 1, LocalDateTime.now().plusDays(1).plusHours(12), false);
+        Incidente incidente5 = new Incidente(17, LocalDateTime.now().minusDays(0).plusHours(5), 2, LocalDateTime.now().plusDays(2).minusHours(12), false);
         Incidente incidente6 = new Incidente(6, LocalDateTime.now().minusDays(5).plusHours(14), 2, LocalDateTime.now().minusDays(1).plusHours(5), false);
         Incidente incidente7 = new Incidente(7, LocalDateTime.now().minusDays(1).plusHours(6), 2, LocalDateTime.now().minusMinutes(30), false);
         Incidente incidente8 = new Incidente(8, LocalDateTime.now().minusDays(2).plusHours(5), 3, LocalDateTime.now().minusDays(2), false);
@@ -43,10 +45,10 @@ public class PersistenceTest {
 
         EntityManager em = BDUtils.getEntityManager();
         BDUtils.comenzarTransaccion(em);
-        em.persist(entidad1);
-        em.persist(entidad2);
-        em.persist(entidad3);
-        em.persist(entidad4);
+       // em.persist(entidad1);
+       // em.persist(entidad2);
+       // em.persist(entidad3);
+       // em.persist(entidad4);
         BDUtils.commit(em);
         BDUtils.comenzarTransaccion(em);
         em.merge(incidente1);
@@ -82,6 +84,18 @@ public class PersistenceTest {
         ranking.setCoeficiente(0.8);
         ranking.setSemana(Ranking.obtenerSemana());
         ranking.generarRanking();
+    }
+
+    @Test
+    public void obtenerRankingSemanalCorrectamente() {
+        Ranking ranking = RepositorioDeRankings.obtenerDeSemana(Ranking.obtenerSemana());
+        System.out.println("Ranking: " + ranking.getSemana());
+    }
+
+    @Test
+    public void obteneItemsDeRanking() {
+        List<ItemRanking> items = RepositorioDeRankings.obtenerItemsDeRanking(2);
+        items.forEach(e -> System.out.println("Item: " + e.getPosicion() + " " + e.getOrganizacion()));
     }
 
 }

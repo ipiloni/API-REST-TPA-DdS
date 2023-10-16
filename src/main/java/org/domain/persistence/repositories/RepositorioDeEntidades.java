@@ -1,4 +1,4 @@
-package org.domain.models.repositories;
+package org.domain.persistence.repositories;
 
 import org.domain.models.EntidadPropietaria;
 import org.domain.persistence.BDUtils;

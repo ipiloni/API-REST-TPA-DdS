@@ -1,11 +1,8 @@
 package org.domain.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.domain.models.repositories.RepositorioDeEntidades;
-import org.domain.models.repositories.RepositorioDeIncidentes;
-import org.domain.models.repositories.RepositorioDeRankings;
+import org.domain.persistence.repositories.RepositorioDeEntidades;
+import org.domain.persistence.repositories.RepositorioDeIncidentes;
+import org.domain.persistence.repositories.RepositorioDeRankings;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
@@ -26,7 +23,7 @@ public class Ranking {
     @Transient
     private Double coeficiente = 0.5;
 
-    public Ranking(Integer id, LocalDate semana, List<ItemRanking> items) {
+    public Ranking(Integer id, LocalDate semana) {
         this.idRanking = id;
         this.semana = semana;
     }
@@ -54,12 +51,12 @@ public class Ranking {
             items.add(this.generarItem(this, entidadPropietaria.getIdOrganizacion(), incidentesDeLaSemana));
         }
 
-        items.sort(Comparator.comparingDouble(ItemRanking::getValor));
+        items.sort(Comparator.comparingDouble(ItemRanking::getValor).reversed());
 
-        int posicion = items.size();
+        int posicion = 1;
         for (ItemRanking item : items) {
             item.setPosicion(posicion);
-            posicion--;
+            posicion++;
         }
 
         RepositorioDeRankings.persistirRanking(this);
@@ -80,10 +77,6 @@ public class Ranking {
     private List<Incidente> obtenerIncidentesDeLaSemana() {
         List<Incidente> incidentes = RepositorioDeIncidentes.obtenerTodosLosIncidentes();
         return incidentes.stream().filter(Incidente::emitidoEnLaSemana).collect(Collectors.toList());
-    }
-
-    public void ordenar(List<ItemRanking> items) {
-        Collections.sort(items);
     }
 
     public static LocalDate obtenerSemana() {

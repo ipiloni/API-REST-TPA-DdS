@@ -25,6 +25,8 @@ public class ItemRanking implements Comparable<ItemRanking> {
         this.valor = valor;
     }
 
+    public ItemRanking() {}
+
     public ItemRanking(Integer posicion, Integer idOrganizacion, Double valor) {
         this.posicionEnRanking = posicion;
         this.idOrganizacion = idOrganizacion;

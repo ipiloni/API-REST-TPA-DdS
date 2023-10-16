@@ -10,11 +10,10 @@ import java.util.List;
 
 public class RankingMapper {
 
-    public RankingResponse generateResponse(Ranking ranking){
+    public RankingResponse generateResponse(Ranking ranking, List<ItemRanking> items){
         return new RankingResponse(
-                ranking.getSemana().toString()
-                //generateItemsResponse(ranking.getItems()
-                // )
+                ranking.getSemana().toString(),
+                generateItemsResponse(items)
         );
     }
 

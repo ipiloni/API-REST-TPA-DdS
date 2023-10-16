@@ -1,6 +1,6 @@
 package org.domain.models;
 
-import org.domain.models.repositories.RepositorioDeIncidentes;
+import org.domain.persistence.repositories.RepositorioDeIncidentes;
 
 import javax.persistence.*;
 import java.util.List;

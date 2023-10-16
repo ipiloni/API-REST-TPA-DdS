@@ -4,11 +4,11 @@ import java.util.List;
 
 public class RankingResponse {
     private String semana;
-    //private List<ItemResponse> items;
+    private List<ItemResponse> items;
 
-    public RankingResponse(String semana/*, List<ItemResponse> items*/) {
+    public RankingResponse(String semana, List<ItemResponse> items) {
         this.semana = semana;
-       // this.items = items;
+        this.items = items;
     }
 
     public String getSemana() {
@@ -19,11 +19,11 @@ public class RankingResponse {
         this.semana = semana;
     }
 
-   /* public List<ItemResponse> getItems() {
+    public List<ItemResponse> getItems() {
         return items;
     }
 
     public void setItems(List<ItemResponse> items) {
         this.items = items;
-    }*/
+    }
 }

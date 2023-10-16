@@ -1,10 +1,11 @@
-package org.domain.models.repositories;
+package org.domain.persistence.repositories;
 
 import org.domain.models.ItemRanking;
 import org.domain.models.Ranking;
 import org.domain.persistence.BDUtils;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -38,8 +39,16 @@ public class RepositorioDeRankings {
         }
     }
 
-    public static Optional<Ranking> obtenerDeSemana(LocalDate semana) {
-        Optional<Ranking> ranking = (Optional<Ranking>) BDUtils.createQuery("from Ranking where semana =" + semana).getSingleResult();
+    public static Ranking obtenerDeSemana(LocalDate semana) {
+        Ranking ranking = null;
+        try {
+             ranking = Optional.ofNullable((Ranking) BDUtils
+                    .createQuery("from Ranking where semana = '" + semana + "'").getSingleResult())
+                    .orElse(null);
+        } catch (NoResultException e){
+            return ranking;
+        }
+
         return ranking;
     }
 }

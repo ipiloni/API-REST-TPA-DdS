@@ -5,18 +5,17 @@ import io.javalin.http.Handler;
 import io.javalin.openapi.*;
 import lombok.Setter;
 import org.domain.mappers.RankingMapper;
+import org.domain.models.ItemRanking;
 import org.domain.models.Ranking;
 import org.domain.models.dbo.RankingResponse;
-import org.domain.persistence.Rankingdb;
+import org.domain.persistence.repositories.RepositorioDeRankings;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
+import java.util.List;
 
 public class GetRankingSemanalHandler implements Handler {
     @Setter
     private RankingMapper rankingMapper = new RankingMapper();
-    @Setter
-    private final Rankingdb rankingdb = new Rankingdb();
 
     @Override
     @OpenApi(
@@ -31,12 +30,13 @@ public class GetRankingSemanalHandler implements Handler {
             }
     )
     public void handle(@NotNull Context context) throws Exception {
-        Ranking ranking = rankingdb.getSemanal();
+        Ranking ranking = RepositorioDeRankings.obtenerDeSemana(Ranking.obtenerSemana());
 
         if(ranking == null){
             context.status(404);
         }else{
-            context.status(200).json(rankingMapper.generateResponse(ranking));
+            List<ItemRanking> items = RepositorioDeRankings.obtenerItemsDeRanking(ranking.getIdRanking());
+            context.status(200).json(rankingMapper.generateResponse(ranking, items));
         }
     }
 }
