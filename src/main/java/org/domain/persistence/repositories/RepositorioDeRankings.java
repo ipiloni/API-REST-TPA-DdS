@@ -43,7 +43,7 @@ public class RepositorioDeRankings {
         Ranking ranking = null;
         try {
              ranking = Optional.ofNullable((Ranking) BDUtils
-                    .createQuery("from Ranking where semana = '" + semana + "'").getSingleResult())
+                    .createQuery("from Ranking where tipoRanking = 'GRADO_IMPACTO_PROBLEMATICAS' and semana = '" + semana + "'").getSingleResult())
                     .orElse(null);
         } catch (NoResultException e){
             return ranking;

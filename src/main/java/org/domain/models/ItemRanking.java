@@ -10,7 +10,7 @@ public class ItemRanking implements Comparable<ItemRanking> {
     @Column(name = "id")
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "ranking_idRanking")
+    @JoinColumn(name = "ranking_id")
     private Ranking ranking;
     @Column(name = "posicionEnRanking")
     private Integer posicionEnRanking;

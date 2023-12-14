@@ -16,11 +16,14 @@ import java.util.stream.Collectors;
 public class Ranking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idRanking")
+    @Column(name = "id")
     private Integer idRanking;
     @Column(name = "semana")
     private LocalDate semana;
-    @Transient
+
+    @Column(name = "tipoRanking")
+    private String tipoRanking;
+    @Column(name = "coeficiente")
     private Double coeficiente = 0.5;
 
     public Ranking(Integer id, LocalDate semana) {
@@ -43,6 +46,7 @@ public class Ranking {
     public void setCoeficiente(Double coeficiente) { this.coeficiente = coeficiente; }
 
     public void generarRanking() {
+        this.tipoRanking = "GRADO_IMPACTO_PROBLEMATICAS";
         List<ItemRanking> items = new ArrayList<>();
         List<EntidadPropietaria> entidades = RepositorioDeEntidades.obtenerTodasLasEntidades();
         List<Incidente> incidentesDeLaSemana = this.obtenerIncidentesDeLaSemana();
