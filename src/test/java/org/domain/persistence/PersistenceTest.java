@@ -81,9 +81,8 @@ public class PersistenceTest {
     @Test
     public void persistirRankingEnBaseDeDatosCorrectamente() {
         Ranking ranking = new Ranking();
-        ranking.setCoeficiente(0.8);
         ranking.setSemana(Ranking.obtenerSemana());
-        ranking.generarRanking();
+        System.out.println(ranking.generarRanking(0.8));
     }
 
     @Test

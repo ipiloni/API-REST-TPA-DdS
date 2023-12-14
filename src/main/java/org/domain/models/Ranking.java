@@ -24,7 +24,7 @@ public class Ranking {
     @Column(name = "tipoRanking")
     private String tipoRanking;
     @Column(name = "coeficiente")
-    private Double coeficiente = 0.5;
+    private Double coeficiente = 0.0;
 
     public Ranking(Integer id, LocalDate semana) {
         this.idRanking = id;
@@ -43,28 +43,41 @@ public class Ranking {
 
     public Double getCoeficiente() { return coeficiente; }
 
-    public void setCoeficiente(Double coeficiente) { this.coeficiente = coeficiente; }
+    private void setCoeficiente(Double coeficiente) { this.coeficiente = coeficiente; }
 
-    public void generarRanking() {
+    public Integer generarRanking(double coeficiente) {
+        this.setCoeficiente(coeficiente);
+        System.out.println(coeficiente);
         this.tipoRanking = "GRADO_IMPACTO_PROBLEMATICAS";
         List<ItemRanking> items = new ArrayList<>();
         List<EntidadPropietaria> entidades = RepositorioDeEntidades.obtenerTodasLasEntidades();
         List<Incidente> incidentesDeLaSemana = this.obtenerIncidentesDeLaSemana();
 
         for (EntidadPropietaria entidadPropietaria : entidades) {
-            items.add(this.generarItem(this, entidadPropietaria.getIdOrganizacion(), incidentesDeLaSemana));
+            List<Incidente> incidentesDeLaOrganizacion = incidentesDeLaSemana
+                    .stream()
+                    .filter(i -> i.getIdOrganizacion().equals(entidadPropietaria.getIdOrganizacion()))
+                    .collect(Collectors.toList());
+            items.add(this.generarItem(this, entidadPropietaria.getIdOrganizacion(), incidentesDeLaOrganizacion));
         }
 
         items.sort(Comparator.comparingDouble(ItemRanking::getValor).reversed());
 
-        int posicion = 1;
+        int posicion = items.size();
         for (ItemRanking item : items) {
             item.setPosicion(posicion);
-            posicion++;
+            posicion--;
         }
 
-        RepositorioDeRankings.persistirRanking(this);
-        RepositorioDeRankings.persistirItems(items);
+        try {
+            RepositorioDeRankings.persistirRanking(this);
+            RepositorioDeRankings.persistirItems(items);
+            System.out.println("La generacion del Ranking ha sido exitosa.");
+            return 201;
+        } catch (Exception e) {
+            System.out.println("La generacion del Ranking ha fallado.");
+            return 404;
+        }
     }
 
     public ItemRanking generarItem(Ranking ranking, Integer idEntidad, List<Incidente> incidentesDeLaSemana) {

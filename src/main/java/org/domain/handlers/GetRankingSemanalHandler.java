@@ -19,22 +19,29 @@ public class GetRankingSemanalHandler implements Handler {
 
     @Override
     @OpenApi(
-            summary = "Get weekly ranking",
+            summary = "Obtiene el ranking semanal. Si no existe, lo genera con el coeficiente pasado por parametro.",
             operationId = "getRankingSemanal",
             path = "/ranking/semanal",
             methods = HttpMethod.GET,
             tags = {"Ranking"},
             responses = {
                     @OpenApiResponse(status = "200", content = {@OpenApiContent(from = RankingResponse.class)}),
-                    @OpenApiResponse(status = "404", description = "Ranking not found")
+                    @OpenApiResponse(status = "500", description = "Hubo un problema en el Servidor.")
             }
     )
-    public void handle(@NotNull Context context) throws Exception {
+    public void handle(@NotNull Context context) {
         Ranking ranking = RepositorioDeRankings.obtenerDeSemana(Ranking.obtenerSemana());
 
         if(ranking == null){
-            context.status(404);
-        }else{
+            double coeficiente = Double.parseDouble(context.pathParam("coeficiente"));
+            System.out.println("El Ranking de la semana no existe, generando Ranking con coeficiente " + coeficiente);
+            ranking = new Ranking();
+            ranking.setSemana(Ranking.obtenerSemana());
+            int status = ranking.generarRanking(coeficiente);
+            List<ItemRanking> items = RepositorioDeRankings.obtenerItemsDeRanking(ranking.getIdRanking());
+            context.status(status).json(rankingMapper.generateResponse(ranking, items));
+        } else {
+            System.out.println("El Ranking de la semana se ha obtenido correctamente.");
             List<ItemRanking> items = RepositorioDeRankings.obtenerItemsDeRanking(ranking.getIdRanking());
             context.status(200).json(rankingMapper.generateResponse(ranking, items));
         }

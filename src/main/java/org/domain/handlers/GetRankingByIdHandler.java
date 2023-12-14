@@ -27,23 +27,19 @@ public class GetRankingByIdHandler implements Handler{
             pathParams = {@OpenApiParam(name = "id", type = Integer.class, description = "Ranking id", required = true)},
             responses = {
                     @OpenApiResponse(status = "200", content = {@OpenApiContent(from = RankingResponse.class)}),
-                    @OpenApiResponse(status = "404", description = "Ranking not found")
+                    @OpenApiResponse(status = "404", description = "No se pudo obtener el Ranking debido a que no existe.")
             }
     )
     public void handle(@NotNull Context context) throws Exception {
         Integer id = Integer.parseInt(context.pathParam("id"));
 
-        if(id == null){
+        Ranking ranking = RepositorioDeRankings.obtenerPorId(id);
+
+        if(ranking == null){
             context.status(404);
         }else{
-            Ranking ranking = RepositorioDeRankings.obtenerPorId(id);
-
-            if(ranking == null){
-                context.status(404);
-            }else{
-                List<ItemRanking> items = RepositorioDeRankings.obtenerItemsDeRanking(id);
-                context.status(200).json(rankingMapper.generateResponse(ranking, items));
-            }
+            List<ItemRanking> items = RepositorioDeRankings.obtenerItemsDeRanking(id);
+            context.status(200).json(rankingMapper.generateResponse(ranking, items));
         }
     }
 }

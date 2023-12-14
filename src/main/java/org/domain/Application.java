@@ -33,8 +33,8 @@ public class Application {
         Javalin app = Javalin
                 .create(Config.getConfigs())
                 .routes(() -> {
-                    path("ranking", () -> {
-                        path("semanal", () -> {
+                    path("api/ranking", () -> {
+                        path("semanal/{coeficiente}", () -> {
                             get(new GetRankingSemanalHandler()::handle);
                         });
                         path("{id}", () -> {
@@ -42,23 +42,11 @@ public class Application {
                         });
                     });
                 })
-                .start(4567);
-        System.out.println("Check out Swagger UI docs at http://localhost:4567/swagger");
+                .start(8080);
+        System.out.println("Check out Swagger UI docs at http://localhost:8080/swagger");
 
         app.exception(IllegalArgumentException.class, (e, ctx) -> {
-            //TODO tratar excepcion
+            ctx.status(500);
         });
-
-        /*EntityManager em = BDUtils.getEntityManager();
-        BDUtils.comenzarTransaccion(em);
-        Incidente incidente = new Incidente(null, null, true);
-        em.persist(incidente);
-        EntidadPropietaria entidadPropietaria = new EntidadPropietaria(1, "EntidadEjemplo");
-        em.persist(entidadPropietaria);
-        ItemRanking itemRanking = new ItemRanking(1, entidadPropietaria, 10.1);
-        em.persist(new Ranking(LocalDate.of(2023,10,8), List.of(itemRanking)));
-        em.persist(itemRanking);
-
-        BDUtils.commit(em);*/
     }
 }
